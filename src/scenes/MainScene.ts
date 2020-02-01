@@ -29,6 +29,16 @@ export class Main_Scene extends Phaser.Scene {
     })
     this.interaction_info = interaction_info
     this.airconsole = new AirConsole();
+    const self = this
+    this.airconsole.onConnect = () => {
+      console.log(self.airconsole.getDeviceId())
+      self.airconsole.setActivePlayers(3)
+    }
+    this.airconsole.onMessage = function(from, data) {
+      console.log(AirConsole.SCREEN)
+      console.log(self.airconsole.getDeviceId())
+      console.log('Doing this thing')
+    };
   }
 
   preload(): void {

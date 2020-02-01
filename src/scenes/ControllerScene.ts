@@ -38,13 +38,23 @@
    }
  
    create(): void {
-    new Cake({scene: this})
+    this.cake = new Cake({scene: this})
+
+    const self = this
+     this.airconsole.onMessage = function(from, data) {
+      console.log(AirConsole.SCREEN)
+      console.log(self.airconsole.getDeviceId())
+      self.cake.changeImageSize()
+      console.log('Doing this thing')
+    };
     this.input.on('pointermove', function (pointer) {
 
       if (pointer.isDown)
       {
           const temp = this.add.image(pointer.x, pointer.y, 'icing');
           temp.setDisplaySize(10, 10)
+          this.airconsole.message(AirConsole.SCREEN, 'THING')
+          this.airconsole.message(this.airconsole.convertPlayerNumberToDeviceId(1), 'that message')
       }
 
   }, this);

@@ -25,4 +25,8 @@ export class Cake extends Phaser.GameObjects.Image {
     this.setOrigin(0.5, 0.5)
   }
 
+  public changeImageSize() {
+    this.setDisplaySize(100, 100)
+  }
+
 }

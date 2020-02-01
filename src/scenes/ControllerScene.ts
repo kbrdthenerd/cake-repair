@@ -6,10 +6,12 @@
 
  /// <reference path="../../node_modules/airconsole-typescript/airconsole-typescript.d.ts" />
  import { Task } from "../objects/task"
+ import { Cake } from '../objects/cake'
  import interaction_info from '../interaction_data/tasks'
   
  export class Controller_Scene extends Phaser.Scene {
    airconsole: AirConsole
+   cake: Cake
  
    constructor() {
      super({
@@ -29,12 +31,23 @@
    preload(): void {
     
      this.load.image('cake', './src/assets/cake.png')
+     this.load.image('icing', './src/assets/icing.png')
    }
  
    init(): void {
    }
  
    create(): void {
+    new Cake({scene: this})
+    this.input.on('pointermove', function (pointer) {
+
+      if (pointer.isDown)
+      {
+          const temp = this.add.image(pointer.x, pointer.y, 'icing');
+          temp.setDisplaySize(10, 10)
+      }
+
+  }, this);
    }
  
    update(): void {

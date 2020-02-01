@@ -5,7 +5,7 @@
  */
 
  /// <reference path="../../node_modules/airconsole-typescript/airconsole-typescript.d.ts" />
-import { Task } from "../objects/task"
+import { Button } from "../objects/button"
 import interaction_info from '../interaction_data/tasks'
  
 export class Main_Scene extends Phaser.Scene {
@@ -66,10 +66,9 @@ export class Main_Scene extends Phaser.Scene {
       },
       callbackScope: self,
       loop: true
-  });
+  })
     this.interactions = this.interaction_info.map(interaction =>
-      new Task(Object.assign({scene: this}, interaction))
-      )
+      new Button(Object.assign({scene: this}, interaction)))
   }
 
   update(): void {

@@ -5,13 +5,15 @@
  */
 
  /// <reference path="../../node_modules/airconsole-typescript/airconsole-typescript.d.ts" />
- import { Task } from "../objects/task"
+ import { Button } from "../objects/button"
  import { Cake } from '../objects/cake'
- import interaction_info from '../interaction_data/tasks'
+ import { Icing } from '../objects/icing'
   
  export class Controller_Scene extends Phaser.Scene {
    airconsole: AirConsole
    cake: Cake
+   icing: Icing
+   button: Button
  
    constructor() {
      super({
@@ -32,6 +34,7 @@
     
      this.load.image('cake', './src/assets/cake.png')
      this.load.image('icing', './src/assets/icing.png')
+     this.load.image('button', './src/assets/interactions/placeholder.png')
    }
  
    init(): void {
@@ -40,24 +43,17 @@
    create(): void {
     this.cake = new Cake({scene: this})
 
+    this.icing = new Icing({scene: this})
+    this.button = new Button(Object.assign({scene: this}, { key: 'Send',
+    width: 100,
+    height: 50,
+    x: 200,
+    y: 400 }))
+
     const self = this
-     this.airconsole.onMessage = function(from, data) {
-      console.log(AirConsole.SCREEN)
-      console.log(self.airconsole.getDeviceId())
+     this.airconsole.onMessage = (from, data) => {
       self.cake.changeImageSize()
-      console.log('Doing this thing')
-    };
-    this.input.on('pointermove', function (pointer) {
-
-      if (pointer.isDown)
-      {
-          const temp = this.add.image(pointer.x, pointer.y, 'icing');
-          temp.setDisplaySize(10, 10)
-          this.airconsole.message(AirConsole.SCREEN, 'THING')
-          this.airconsole.message(this.airconsole.convertPlayerNumberToDeviceId(1), 'that message')
-      }
-
-  }, this);
+    }
    }
  
    update(): void {

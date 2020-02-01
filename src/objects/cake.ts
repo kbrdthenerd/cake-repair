@@ -1,4 +1,5 @@
 import { Main_Scene } from "../scenes/MainScene"
+import { Controller_Scene } from "../scenes/ControllerScene"
 
 /**
  * @author       Digitsensitive <digit.sensitivee@gmail.com>
@@ -18,6 +19,12 @@ export class Cake extends Phaser.GameObjects.Image {
     this.setDisplaySize(300, 300)
     this.initImage()
     this.scene.add.existing(this);
+    const scene: Controller_Scene = this.scene as Controller_Scene
+
+        this.setInteractive().on('pointermove', (pointer) => {
+      if (pointer.isDown) {
+          scene.icing.add(new Phaser.GameObjects.Image(scene, pointer.x, pointer.y, 'icing'), true)
+      }}, this)
 
   }
 

@@ -40,6 +40,8 @@ export class Main_Scene extends Phaser.Scene {
   create(): void {
     this.cake = new Cake({scene: this})
     this.icing = new Icing({scene: this})
+    this.add.text(400, 100, 'Cake Confusion', { fontFamily: 'Futura', fontSize: 100, color: '#c18cc8' })
+    this.add.text(410, 250, 'by Katherine Brennan', { fontFamily: 'Futura', fontSize: 50, color: '#c18cc8' })
 
     const self = this
     this.airconsole.onConnect = () => {

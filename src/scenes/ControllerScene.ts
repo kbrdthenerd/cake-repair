@@ -73,6 +73,11 @@
          self.button.destroy()
        }
        self.label = self.add.text(125, 450, self.choices[self.answer], { fontFamily: 'Futura', fontSize: 50, color: '#c18cc8' })
+       this.button = new Button(Object.assign({scene: this}, { key: 'Send',
+       width: 100,
+       height: 50,
+       x: 175,
+       y: 400 }))
        self.makeInteractive()
      } else if (self.airconsole.convertPlayerNumberToDeviceId(1) === self.airconsole.getDeviceId()) {
        self.makeInteractive()
@@ -125,11 +130,6 @@
     this.cake = new Cake({scene: this})
     this.icing = new Icing({scene: this})
     this.finger = new Finger({scene: this})
-    this.button = new Button(Object.assign({scene: this}, { key: 'Send',
-    width: 100,
-    height: 50,
-    x: 175,
-    y: 400 }))
     const self = this
      this.airconsole.onMessage = (from, data) => {
       self.drawing = false
@@ -153,6 +153,15 @@
         })
         this.airconsole.message(self.airconsole.convertPlayerNumberToDeviceId(2), self.answer)
       }
+
+      if(self.airconsole.convertPlayerNumberToDeviceId(1) === self.airconsole.getDeviceId()) {
+      this.button = new Button(Object.assign({scene: this}, { key: 'Send',
+      width: 100,
+      height: 50,
+      x: 175,
+      y: 400 }))
+      }
+
     }
 
     this.input.on('pointermove', (pointer) => {

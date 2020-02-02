@@ -32,6 +32,7 @@
     "phaser": "3.18.1"
   },
   "scripts": {
+    "start": "node server.js",
     "dev": "webpack --mode development && webpack-dev-server --mode development",
     "build": "webpack --mode production && webpack-dev-server --mode production"
   },

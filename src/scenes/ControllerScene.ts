@@ -68,6 +68,10 @@
        if (self.label) {
          self.label.destroy()
        }
+       if(self.button) {
+         self.button.label.destroy()
+         self.button.destroy()
+       }
        self.label = self.add.text(100, 500, self.choices[self.answer], { size: 200 })
        self.label.setColor('000000')
        self.makeInteractive()

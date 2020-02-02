@@ -85,7 +85,7 @@
 
     this.input.on('pointermove', (pointer) => {
       if (pointer.isDown) {
-             self.physics.moveTo(self.finger, pointer.x, pointer.y, 300)
+             self.physics.moveTo(self.finger, pointer.x, pointer.y, 200)
       } else {
           self.finger.setVelocity(0)
       }

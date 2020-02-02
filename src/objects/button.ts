@@ -28,7 +28,8 @@ export class Button extends Phaser.GameObjects.Image {
     this.setOrigin(0.5, 0.5)
   }
   private initLabel(x, y, key): void {
-    this.label = this.scene.add.text(x, y, key)
+    this.label = this.scene.add.text(x + 30, y, key, { fontFamily: 'Futura', fontSize: 30, color: '#c18cc8' })
+    this.label.setOrigin(0.5, 0.5)
     this.label.depth = 10
   }
 

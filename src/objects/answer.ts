@@ -28,7 +28,7 @@ export class Answer extends Phaser.GameObjects.Image {
     this.setOrigin(0.5, 0.5)
   }
   private initLabel(x, y, key): void {
-    this.label = this.scene.add.text(x, y, key)
+    this.label = this.scene.add.text(x - 20, y - 17, key, { fontFamily: 'Futura', fontSize: 30, color: '#c18cc8' })
     this.label.depth = 10
   }
 

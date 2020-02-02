@@ -72,8 +72,7 @@
          self.button.label.destroy()
          self.button.destroy()
        }
-       self.label = self.add.text(100, 500, self.choices[self.answer], { size: 200 })
-       self.label.setColor('000000')
+       self.label = self.add.text(125, 450, self.choices[self.answer], { fontFamily: 'Futura', fontSize: 50, color: '#c18cc8' })
        self.makeInteractive()
      } else if (self.airconsole.convertPlayerNumberToDeviceId(1) === self.airconsole.getDeviceId()) {
        self.makeInteractive()
@@ -101,17 +100,17 @@
      const finalChoices = [one, two, correct]
 
     this.option1 = new Answer(Object.assign({scene: this}, { key: finalChoices.splice(this.getRandomInt(finalChoices.length), 1),
-    width: 100,
+    width: 150,
     height: 50,
     x: 200,
     y: 100 }))
    this.option2 = new Answer(Object.assign({scene: this}, { key: finalChoices.splice(this.getRandomInt(finalChoices.length), 1),
-   width: 100,
+   width: 150,
    height: 50,
    x: 200,
    y:  300}))
   this.option3 = new Answer(Object.assign({scene: this}, { key: finalChoices[0],
-  width: 100,
+  width: 150,
   height: 50,
   x: 200,
   y: 500 }))
@@ -129,7 +128,7 @@
     this.button = new Button(Object.assign({scene: this}, { key: 'Send',
     width: 100,
     height: 50,
-    x: 200,
+    x: 175,
     y: 400 }))
     const self = this
      this.airconsole.onMessage = (from, data) => {

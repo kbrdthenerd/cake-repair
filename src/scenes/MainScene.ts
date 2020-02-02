@@ -48,8 +48,7 @@ export class Main_Scene extends Phaser.Scene {
     }
     this.airconsole.onMessage = function(from, data) {
       if(self.airconsole.convertPlayerNumberToDeviceId(2) === from) {
-        self.label = self.add.text(100, 400, data, { size: 200 })
-        self.label.setColor('000000')
+        self.label = self.add.text(100, 400, data, { fontFamily: 'Futura', fontSize: 100, color: '#c18cc8' })
       } else {
       self.icing.destroy(true)
       self.icing = new Icing({scene: self})

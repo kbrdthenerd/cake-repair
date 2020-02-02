@@ -21,7 +21,7 @@ const config: Phaser.Types.Core.GameConfig = {
       gravity: { y: 200 }
     }
   },
-  backgroundColor: 0xff0066
+  backgroundColor: 0xe9e7fb
 };
 
 // game class

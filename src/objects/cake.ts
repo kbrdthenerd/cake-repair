@@ -24,10 +24,8 @@ export class Cake extends Phaser.GameObjects.Image {
       if (pointer.isDown) {
          if(scene.airconsole.convertPlayerNumberToDeviceId(0) === scene.airconsole.getDeviceId()) {
             scene.icing.create(pointer.x, pointer.y, 'icing')
-         } else {
-             scene.physics.moveTo(scene.finger, pointer.x, pointer.y, 200)
          }
-      } else scene.finger.setVelocity(0)
+        }
     }, this)
 
   }

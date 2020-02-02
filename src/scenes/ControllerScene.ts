@@ -56,8 +56,26 @@
      this.airconsole.onMessage = (from, data) => {
       data.forEach(({ x, y }) => self.icing.create(x, y, 'icing'))
       self.physics.world.enable(self.icing)
-      self.physics.add.collider(self.finger, self.icing)
+      self.physics.add.collider(self.finger, self.icing, () => {
+        self.icing.setVelocity(0, 0)
+      })
     }
+
+    this.input.on('pointermove', (pointer) => {
+      if (pointer.isDown) {
+             self.physics.moveTo(self.finger, pointer.x, pointer.y, 300)
+      } else {
+          self.finger.setVelocity(0)
+      }
+    }, this)
+
+    this.input.on('pointerdown', pointer => {
+        self.finger.setPosition(pointer.x, pointer.y)
+      })
+
+      this.input.on('pointerup', pointer => {
+        self.finger.setVelocity(0)
+      })
    }
  
    update(): void {

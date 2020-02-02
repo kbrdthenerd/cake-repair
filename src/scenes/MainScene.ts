@@ -7,6 +7,8 @@
  /// <reference path="../../node_modules/airconsole-typescript/airconsole-typescript.d.ts" />
 import { Button } from "../objects/button"
 import interaction_info from '../interaction_data/tasks'
+import { Cake } from "../objects/cake"
+import { Icing } from "../objects/icing"
  
 export class Main_Scene extends Phaser.Scene {
   interactions: Object
@@ -14,6 +16,8 @@ export class Main_Scene extends Phaser.Scene {
   motivation: integer
   motivationText: Phaser.GameObjects.Text
   airconsole: AirConsole
+  cake: Cake
+  icing: Icing
 
   constructor() {
     super({
@@ -35,43 +39,26 @@ export class Main_Scene extends Phaser.Scene {
       self.airconsole.setActivePlayers(3)
     }
     this.airconsole.onMessage = function(from, data) {
-      console.log(AirConsole.SCREEN)
-      console.log(self.airconsole.getDeviceId())
-      console.log('Doing this thing')
+      self.icing.destroy(true)
+      self.icing = new Icing({scene: self})
+      data.forEach(({ x, y }) => self.icing.create(x, y, 'icing'))
     };
   }
 
   preload(): void {
-    this.interaction_info.forEach(interaction => {
-    // this.load.image(interaction['key'], `./src/assets/interactions/${interaction['key']}.png`)
-    });
-    this.load.image('placeholder', './src/assets/interactions/placeholder.png')
+    this.load.image('cake', './src/assets/cake.png')
+    this.load.image('icing', './src/assets/icing.png')
   }
 
   init(): void {
-    this.motivation = 0
   }
 
   create(): void {
-    this.motivationText = this.add.text(10, 10, `Motivation: ${this.motivation}`)
-    this.motivationText.setColor('black')
-
-    const self = this
-    var timer = this.time.addEvent({
-      delay: 1000,                // ms
-      callback: () => {
-        if (this.motivation > 0) {
-          this.motivation--
-        }
-      },
-      callbackScope: self,
-      loop: true
-  })
-    this.interactions = this.interaction_info.map(interaction =>
-      new Button(Object.assign({scene: this}, interaction)))
+    this.cake = new Cake({scene: this})
+    this.icing = new Icing({scene: this})
+ 
   }
 
   update(): void {
-    this.motivationText.setText(`Motivation: ${this.motivation}`)
   }
 }

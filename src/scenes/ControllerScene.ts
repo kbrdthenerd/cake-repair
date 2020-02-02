@@ -16,6 +16,7 @@
    icing: Icing
    button: Button
    finger: Finger
+   drawing: boolean
  
    constructor() {
      super({
@@ -29,7 +30,13 @@
          }
        }
      })
+     const self = this
      this.airconsole = new AirConsole();
+     this.airconsole.onConnect = () => {
+      if(self.airconsole.convertPlayerNumberToDeviceId(0) === self.airconsole.getDeviceId()) {
+        self.drawing = true
+      }
+    }
    }
  
    preload(): void {
@@ -54,11 +61,26 @@
     y: 400 }))
     const self = this
      this.airconsole.onMessage = (from, data) => {
+      self.drawing = false
+      self.icing.destroy(true)
+      self.icing = new Icing({scene: this})
       data.forEach(({ x, y }) => self.icing.create(x, y, 'icing'))
       self.physics.world.enable(self.icing)
       self.physics.add.collider(self.finger, self.icing, () => {
         self.icing.setVelocity(0, 0)
       })
+
+      if(self.airconsole.convertPlayerNumberToDeviceId(0) === self.airconsole.getDeviceId()) {
+        this.time.addEvent({
+            delay: 100,
+            callback: () => {
+              const coordinates = this.icing.children.entries.map((image: Phaser.GameObjects.Image) => { return {x: image.x, y: image.y}})
+              this.airconsole.message(AirConsole.SCREEN, coordinates)
+            },
+            callbackScope: self,
+            loop: true
+        })
+      }
     }
 
     this.input.on('pointermove', (pointer) => {

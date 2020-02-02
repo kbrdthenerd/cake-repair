@@ -22,7 +22,7 @@ export class Cake extends Phaser.GameObjects.Image {
     const scene: Controller_Scene = this.scene as Controller_Scene
         this.setInteractive().on('pointermove', (pointer) => {
       if (pointer.isDown) {
-         if(scene.airconsole.convertPlayerNumberToDeviceId(0) === scene.airconsole.getDeviceId()) {
+         if(scene.drawing) {
             scene.icing.create(pointer.x, pointer.y, 'icing')
          }
         }

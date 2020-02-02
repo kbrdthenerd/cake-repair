@@ -38,6 +38,10 @@ export class Button extends Phaser.GameObjects.Image {
       if (scene.airconsole.convertPlayerNumberToDeviceId(0) === scene.airconsole.getDeviceId()) {
         const coordinates = scene.icing.children.entries.map((image: Phaser.GameObjects.Image) => { return {x: image.x, y: image.y}})
         scene.airconsole.message(scene.airconsole.convertPlayerNumberToDeviceId(1), coordinates)
+      } else {
+        const coordinates = scene.icing.children.entries.map((image: Phaser.GameObjects.Image) => { return {x: image.x, y: image.y}})
+        scene.airconsole.message(AirConsole.SCREEN, coordinates)
+        scene.airconsole.message(scene.airconsole.convertPlayerNumberToDeviceId(0), coordinates)
       }
     })
   }

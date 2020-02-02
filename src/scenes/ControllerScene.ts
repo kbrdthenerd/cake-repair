@@ -52,7 +52,8 @@
 
     const self = this
      this.airconsole.onMessage = (from, data) => {
-      self.cake.changeImageSize()
+      const newIcing = data.map(({ x, y }) => new Phaser.GameObjects.Image(self, x, y, 'icing'))
+      self.icing.addMultiple(newIcing, true)
     }
    }
  

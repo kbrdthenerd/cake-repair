@@ -36,7 +36,8 @@ export class Button extends Phaser.GameObjects.Image {
     const scene: Controller_Scene = this.scene as Controller_Scene
     this.setInteractive().on('pointerdown', pointer => {
       if (scene.airconsole.convertPlayerNumberToDeviceId(0) === scene.airconsole.getDeviceId()) {
-        scene.airconsole.message(scene.airconsole.convertPlayerNumberToDeviceId(1), 'that message')
+        const coordinates = scene.icing.children.entries.map((image: Phaser.GameObjects.Image) => { return {x: image.x, y: image.y}})
+        scene.airconsole.message(scene.airconsole.convertPlayerNumberToDeviceId(1), coordinates)
       }
     })
   }

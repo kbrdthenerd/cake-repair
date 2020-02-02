@@ -8,7 +8,7 @@ import { Controller_Scene } from "../scenes/ControllerScene"
  */
 
 
-export class Button extends Phaser.GameObjects.Image {
+export class Answer extends Phaser.GameObjects.Image {
   label: Phaser.GameObjects.Text
   motivation: integer
 
@@ -36,16 +36,14 @@ export class Button extends Phaser.GameObjects.Image {
     const scene: Controller_Scene = this.scene as Controller_Scene
     const self = this
     this.setInteractive().on('pointerdown', pointer => {
-      if (scene.airconsole.convertPlayerNumberToDeviceId(0) === scene.airconsole.getDeviceId()) {
-        const coordinates = scene.icing.children.entries.map((image: Phaser.GameObjects.Image) => { return {x: image.x, y: image.y}})
-        scene.airconsole.message(scene.airconsole.convertPlayerNumberToDeviceId(1), coordinates)
-      } else {
-        const coordinates = scene.icing.children.entries.map((image: Phaser.GameObjects.Image) => { return {x: image.x, y: image.y}})
-        scene.airconsole.message(AirConsole.SCREEN, coordinates)
-        scene.airconsole.message(scene.airconsole.convertPlayerNumberToDeviceId(0), coordinates)
-      }
-      self.label.destroy()
-      self.destroy()
+        const message = self.label.text === scene.choices[scene.answer] ? 'CORRECT!!!' : 'WRONG :('
+        scene.airconsole.message(AirConsole.SCREEN, message)
+        scene.option1.label.destroy()
+        scene.option1.destroy()
+        scene.option2.label.destroy()
+        scene.option2.destroy()
+        scene.option3.label.destroy()
+        scene.option3.destroy()
     })
   }
 

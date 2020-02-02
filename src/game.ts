@@ -10,8 +10,8 @@ import { Scene } from "phaser";
 
 // main game configuration
 const config: Phaser.Types.Core.GameConfig = {
-  width: 800,
-  height: 600,
+  width: 2000,
+  height: 2000,
   type: Phaser.AUTO,
   parent: "screenGame",
   scene: [Main_Scene],

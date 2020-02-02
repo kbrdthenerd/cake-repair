@@ -9,6 +9,7 @@
  import { Cake } from '../objects/cake'
  import { Icing } from '../objects/icing'
  import { Finger } from '../objects/finger'
+ import { Answer } from '../objects/answer'
   
  export class Controller_Scene extends Phaser.Scene {
    airconsole: AirConsole
@@ -17,6 +18,19 @@
    button: Button
    finger: Finger
    drawing: boolean
+   interact: boolean
+   option1: Answer
+   option2: Answer
+   option3: Answer
+   answer: integer
+   label: Phaser.GameObjects.Text
+   choices: [string, string, string, string, string] = [
+    'Circle',
+    'Square',
+    'Eight',
+    'Triangle',
+    'Star',
+  ]
  
    constructor() {
      super({
@@ -30,13 +44,6 @@
          }
        }
      })
-     const self = this
-     this.airconsole = new AirConsole();
-     this.airconsole.onConnect = () => {
-      if(self.airconsole.convertPlayerNumberToDeviceId(0) === self.airconsole.getDeviceId()) {
-        self.drawing = true
-      }
-    }
    }
  
    preload(): void {
@@ -51,6 +58,67 @@
    }
  
    create(): void {
+
+    const self = this
+    this.airconsole = new AirConsole();
+    this.airconsole.onConnect = () => {
+     if(self.airconsole.convertPlayerNumberToDeviceId(0) === self.airconsole.getDeviceId()) {
+       self.drawing = true
+       self.answer = this.getRandomInt(self.choices.length)
+       if (self.label) {
+         self.label.destroy()
+       }
+       self.label = self.add.text(100, 500, self.choices[self.answer], { size: 200 })
+       self.label.setColor('000000')
+       self.makeInteractive()
+     } else if (self.airconsole.convertPlayerNumberToDeviceId(1) === self.airconsole.getDeviceId()) {
+       self.makeInteractive()
+     } else {
+      self.airconsole.onMessage = (from, data) => {
+        self.answer = data
+        self.createOptions(data)
+      }
+     }
+   }
+   }
+
+ 
+   update(): void {
+   }
+
+   private createOptions(answer: integer): void {
+     const correct = this.choices[answer]
+     const options = this.choices.slice(answer + 1, this.choices.length).concat(this.choices.slice(0, answer))
+     const one = options.splice(this.getRandomInt(options.length), 1)[0]
+     const two = options.splice(this.getRandomInt(options.length), 1)[0]
+
+     console.log(one)
+     console.log(two)
+     const finalChoices = [one, two, correct]
+
+    this.option1 = new Answer(Object.assign({scene: this}, { key: finalChoices.splice(this.getRandomInt(finalChoices.length), 1),
+    width: 100,
+    height: 50,
+    x: 200,
+    y: 100 }))
+   this.option2 = new Answer(Object.assign({scene: this}, { key: finalChoices.splice(this.getRandomInt(finalChoices.length), 1),
+   width: 100,
+   height: 50,
+   x: 200,
+   y:  300}))
+  this.option3 = new Answer(Object.assign({scene: this}, { key: finalChoices[0],
+  width: 100,
+  height: 50,
+  x: 200,
+  y: 500 }))
+
+   }
+
+   private getRandomInt(max) {
+    return Math.floor(Math.random() * Math.floor(max));
+  }
+
+   private makeInteractive(): void {
     this.cake = new Cake({scene: this})
     this.icing = new Icing({scene: this})
     this.finger = new Finger({scene: this})
@@ -80,6 +148,7 @@
             callbackScope: self,
             loop: true
         })
+        this.airconsole.message(self.airconsole.convertPlayerNumberToDeviceId(2), self.answer)
       }
     }
 
@@ -98,9 +167,5 @@
       this.input.on('pointerup', pointer => {
         self.finger.setVelocity(0)
       })
-   }
- 
-   update(): void {
-   }
+    }
  }
- 

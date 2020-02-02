@@ -8,11 +8,10 @@ import { Main_Scene } from "../scenes/MainScene"
  */
 
 
-export class Icing extends Phaser.GameObjects.Group {
+export class Icing extends Phaser.Physics.Arcade.Group {
 
   constructor(params) {
-    super(params.scene, [])
-
+    super(params.scene.physics.world, params.scene, [])
   }
 
 }
